@@ -3,6 +3,7 @@ const app = express();
 const port = 8000;
 
 app.set('view engine', 'ejs');
+app.use(express.urlencoded());
 
 const students = [
   {
@@ -32,14 +33,23 @@ const students = [
 ]
 
 app.get('/', (req, res) => {
-  res.end("Welcome to Express Server");
+  res.render('index', {students});
 }
 );
 
-app.get('/home', (req, res) => {
-  res.render('index');
-}
-);
+app.post('/add-student', (req, res) =>{
+    students.push(req.body);
+    // console.log(req.body)
+    return res.redirect('/')
+}) 
+
+app.get('/delete-student/:id', (req, res) => {
+    // console.log(req.params.id);
+    const id = req.params.id
+
+    students = students.filter(stud => stud.id !== id)
+    return res.redirect('/')
+})
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

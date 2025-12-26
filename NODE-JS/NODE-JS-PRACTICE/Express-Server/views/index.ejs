@@ -1,13 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Student</title>
 </head>
+
 <body>
-    
-    <h1>Home Page</h1>
+
+    <center>
+        <h2>Students Details</h2>
+        <form action="/add-student" method="post" style="padding-bottom: 20px;">
+
+            <table border="1px" cellpadding="3">
+                <tr>
+                    <td>Id:</td>
+                    <td>
+                        <input type="text" name="id">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td>
+                        <input type="text" name="name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Age:</td>
+                    <td>
+                        <input type="number" name="age">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Eamil:</td>
+                    <td>
+                        <input type="text" name="email">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit">Add-student</button></td>
+                </tr>
+            </table>
+        </form>
+
+        <table border="2" cellpadding="6">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Age</td>
+                    <td>Email</td>
+                    <td colspan="2">Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% students.forEach((stud,i)=>{ %>
+                    <tr>
+                        <td>
+                            <%= stud.id %>
+                        </td>
+                        <td>
+                            <%= stud.name %>
+                        </td>
+                        <td>
+                            <%= stud.age %>
+                        </td>
+                        <td>
+                            <%= stud.email %>
+                        </td>
+                        <td><a href="">edit</a></td>
+                        <td><a href="/delete-student/<%= stud.id %>">Delete</a></td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </center>
 
 </body>
+
 </html>
