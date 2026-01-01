@@ -1,79 +1,135 @@
 const express = require('express');
-const port = 8080;
+const port = 8000;
 const app = express()
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded())
 app.use(express.json())
 
-let students = [
+// Changed students array to tasks array
+let tasks = [
     {
         id: "1",
-        name: "john",
-        age: "19",
-        email: "john@test.in"
+        title: "Complete Project Proposal",
+        description: "Write and submit the final project proposal document",
+        due_date: "2024-01-15",
+        due_time: "18:00",
+        status: "pending"
     },
     {
         id: "2",
-        name: "jolly",
-        age: "19",
-        email: "jolly@test.in"
+        title: "Team Meeting",
+        description: "Weekly team sync-up meeting",
+        due_date: "2024-01-10",
+        due_time: "14:30",
+        status: "completed"
     },
     {
         id: "3",
-        name: "jonny",
-        age: "21",
-        email: "jonny@test.in"
+        title: "Code Review",
+        description: "Review pull requests from junior developers",
+        due_date: "2024-01-12",
+        due_time: "16:00",
+        status: "in-progress"
     },
     {
         id: "4",
-        name: "nobita",
-        age: "19",
-        email: "nobita@test.in"
+        title: "Client Presentation",
+        description: "Prepare slides and demo for client meeting",
+        due_date: "2024-01-20",
+        due_time: "11:00",
+        status: "pending"
     },
 ]
 
+// Home route - changed to tasks
 app.get('/', (req, res) => {
-    res.render('index', { students })
+    res.render('index', { tasks })
 })
 
-app.post('/add-student', (req, res) => {
-    students.push(req.body);
+// Add task route
+app.post('/add-task', (req, res) => {
+    // Add default status if not provided
+    const newTask = {
+        ...req.body,
+        status: req.body.status || 'pending'
+    };
+    tasks.push(newTask);
     return res.redirect('/')
 })
 
-app.get('/delete-student/:id', (req, res) => {
+// Delete task route
+app.get('/delete-task/:id', (req, res) => {
     const id = req.params.id
-
-    students = students.filter(stud => stud.id !== id)
+    tasks = tasks.filter(task => task.id !== id)
     return res.redirect('/')
 })
 
-app.get('/edit-student/:id', (req, res) => {
-
+// Edit task route - show edit form
+app.get('/edit-task/:id', (req, res) => {
     let id = req.params.id;
-    student = students.find((stud) => stud.id == id);
-    return res.render('edit-student', { student })
+    let task = tasks.find((task) => task.id == id);
+    
+    if (!task) {
+        return res.redirect('/')
+    }
+    
+    return res.render('to-do', { task })
 })
 
-app.post('/update-student/:id', (req, res) => {
+// Update task route
+app.post('/update-task/:id', (req, res) => {
     let id = req.params.id;
 
-    let update = students.map((stud) => {
-        if (stud.id == id) {
+    let updatedTasks = tasks.map((task) => {
+        if (task.id == id) {
             return {
                 ...req.body,
                 id: id,
             }
         } else {
-            return stud
+            return task
         }
     })
 
-    students = update
+    tasks = updatedTasks
     res.redirect('/')
 })
 
+app.get('/complete-task/:id', (req, res) => {
+    let id = req.params.id;
+    
+    tasks = tasks.map((task) => {
+        if (task.id == id) {
+            return {
+                ...task,
+                status: 'completed'
+            }
+        } else {
+            return task
+        }
+    })
+    
+    return res.redirect('/')
+})
+
+app.get('/start-task/:id', (req, res) => {
+    let id = req.params.id;
+    
+    tasks = tasks.map((task) => {
+        if (task.id == id) {
+            return {
+                ...task,
+                status: 'in-progress'
+            }
+        } else {
+            return task
+        }
+    })
+    
+    return res.redirect('/')
+})
+
 app.listen(port, () => {
-    console.log(`Server is started at http://localhost:${port}`);
+    console.log(`Task Management Server started at http://localhost:${port}`);
 });

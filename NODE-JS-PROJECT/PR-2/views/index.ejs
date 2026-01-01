@@ -4,42 +4,425 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students</title>
+    <title>Task Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        center {
+            display: block;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #333;
+            font-size: 32px;
+            margin: 20px 0 30px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            padding-bottom: 15px;
+            border-bottom: 3px solid #333;
+            display: inline-block;
+        }
+        
+        form {
+            margin-bottom: 30px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        form table {
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #FFF8DC;
+        }
+        
+        form table tr {
+            transition: all 0.3s ease;
+        }
+        
+        form table tr:hover {
+            background-color: #FFEB3B;
+        }
+        
+        form table td {
+            padding: 12px 15px;
+            border: 1px solid #FFA500;
+        }
+        
+        form table tr:first-child td {
+            border-top: none;
+        }
+        
+        form table tr td:first-child {
+            font-weight: bold;
+            color: #333;
+            background-color: #FFD700;
+            width: 130px;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #FFA500;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #FFF8E1;
+            transition: all 0.3s;
+        }
+        
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #FF8C00;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.3);
+        }
+        
+        button[type="submit"] {
+            background: linear-gradient(to right, #FFD700, #FFA500);
+            color: #333;
+            border: 2px solid #FF8C00;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            letter-spacing: 1px;
+        }
+        
+        button[type="submit"]:hover {
+            background: linear-gradient(to right, #FFA500, #FF8C00);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.4);
+        }
+        
+        table[border="2"] {
+            border: 2px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: white;
+            margin-top: 20px;
+        }
+        
+        table[border="2"] thead {
+            background: linear-gradient(to right, #333, #555);
+            color: #FFD700;
+        }
+        
+        table[border="2"] thead tr td {
+            padding: 15px;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            border-right: 1px solid rgba(255, 215, 0, 0.3);
+            color: #FFD700;
+        }
+        
+        table[border="2"] thead tr td:last-child {
+            border-right: none;
+        }
+        
+        table[border="2"] tbody tr {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #FFE4B5;
+        }
+        
+        table[border="2"] tbody tr:nth-child(even) {
+            background-color: #FFF8E1;
+        }
+        
+        table[border="2"] tbody tr:hover {
+            background-color: #FFEB3B;
+            transform: scale(1.01);
+        }
+        
+        table[border="2"] tbody tr td {
+            padding: 12px 15px;
+            text-align: center;
+            color: #333;
+            border-right: 1px solid #FFE4B5;
+        }
+        
+        table[border="2"] tbody tr td:last-child {
+            border-right: none;
+        }
+        
+        .task-description {
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .task-due {
+            font-weight: bold;
+            color: #FF5722;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-pending {
+            background-color: #FFC107;
+            color: #333;
+        }
+        
+        .status-completed {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .status-overdue {
+            background-color: #F44336;
+            color: white;
+        }
+        
+        a {
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin: 0 3px;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        a[href*="edit-task"] {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #45a049;
+        }
+        
+        a[href*="edit-task"]:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
+        }
+        
+        a[href*="delete-task"] {
+            background-color: #f44336;
+            color: white;
+            border: 1px solid #d32f2f;
+        }
+        
+        a[href*="delete-task"]:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(244, 67, 54, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h2 {
+                font-size: 24px;
+                margin: 15px 0 20px 0;
+            }
+            
+            form table td,
+            table[border="2"] td {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+            
+            input[type="text"],
+            input[type="date"],
+            input[type="time"],
+            textarea {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+            
+            textarea {
+                min-height: 60px;
+            }
+            
+            button[type="submit"] {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            a {
+                padding: 5px 10px;
+                font-size: 12px;
+                min-width: 60px;
+                margin: 2px;
+            }
+            
+            .task-description {
+                max-width: 150px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            form table,
+            table[border="2"] {
+                width: 100%;
+            }
+            
+            form table td,
+            table[border="2"] td {
+                display: block;
+                width: 100%;
+                text-align: left;
+                padding: 8px;
+            }
+            
+            form table td:first-child,
+            table[border="2"] thead {
+                background-color: #FFD700;
+                font-weight: bold;
+                color: #333;
+            }
+            
+            table[border="2"] thead {
+                display: none;
+            }
+            
+            table[border="2"] tbody tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 2px solid #FFA500;
+                border-radius: 5px;
+                padding: 10px;
+            }
+            
+            table[border="2"] tbody tr td {
+                display: block;
+                text-align: right;
+                border: none;
+                border-bottom: 1px solid #FFE4B5;
+                position: relative;
+                padding-left: 50%;
+            }
+            
+            table[border="2"] tbody tr td:last-child {
+                border-bottom: none;
+                text-align: center;
+                padding-left: 0;
+            }
+            
+            table[border="2"] tbody tr td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-weight: bold;
+                color: #333;
+            }
+            
+            table[border="2"] tbody tr td[data-label]:before {
+                content: attr(data-label);
+            }
+            
+            /* Add data-label attributes for task table */
+            table[border="2"] tbody tr td:nth-child(1):before {
+                content: "Task ID: ";
+            }
+            
+            table[border="2"] tbody tr td:nth-child(2):before {
+                content: "Title: ";
+            }
+            
+            table[border="2"] tbody tr td:nth-child(3):before {
+                content: "Description: ";
+            }
+            
+            table[border="2"] tbody tr td:nth-child(4):before {
+                content: "Due Date: ";
+            }
+            
+            table[border="2"] tbody tr td:nth-child(5):before {
+                content: "Due Time: ";
+            }
+            
+            table[border="2"] tbody tr td:nth-child(6):before {
+                content: "Status: ";
+            }
+        }
+    </style>
 </head>
 
 <body>
     <center>
-        <h2>Students Details</h2>
-        <form action="/add-student" method="post" style="padding-bottom: 20px;">
+        <h2>Task Management</h2>
+        <form action="/add-task" method="post" style="padding-bottom: 20px;">
 
             <table border="1px" cellpadding="3">
                 <tr>
-                    <td>Id:</td>
+                    <td>Task ID:</td>
                     <td>
-                        <input type="text" name="id">
+                        <input type="text" name="id" placeholder="Enter task ID" required>
                     </td>
                 </tr>
                 <tr>
-                    <td>Name:</td>
+                    <td>Task Title:</td>
                     <td>
-                        <input type="text" name="name">
+                        <input type="text" name="title" placeholder="Enter task title" required>
                     </td>
                 </tr>
                 <tr>
-                    <td>Age:</td>
+                    <td>Description:</td>
                     <td>
-                        <input type="number" name="age">
+                        <textarea name="description" placeholder="Enter task description" required></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td>Eamil:</td>
+                    <td>Due Date:</td>
                     <td>
-                        <input type="text" name="email">
+                        <input type="date" name="due_date" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Due Time:</td>
+                    <td>
+                        <input type="time" name="due_time" required>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><button type="submit">Add-student</button></td>
+                    <td><button type="submit">Add Task</button></td>
                 </tr>
             </table>
         </form>
@@ -47,33 +430,41 @@
         <table border="2" cellpadding="6">
             <thead>
                 <tr>
-                    <td>ID</td>
-                    <td>Name</td>
-                    <td>Age</td>
-                    <td>Email</td>
+                    <td>Task ID</td>
+                    <td>Title</td>
+                    <td>Description</td>
+                    <td>Due Date</td>
+                    <td>Due Time</td>
+                    <td>Status</td>
                     <td colspan="2">Action</td>
                 </tr>
             </thead>
             <tbody>
-                <% students.forEach((stud,i)=>{ %>
+                <% tasks.forEach((task,i)=>{ %>
                     <tr>
                         <td>
-                            <%= stud.id %>
+                            <%= task.id %>
                         </td>
                         <td>
-                            <%= stud.name %>
+                            <%= task.title %>
+                        </td>
+                        <td class="task-description">
+                            <%= task.description %>
+                        </td>
+                        <td class="task-due">
+                            <%= task.due_date %>
+                        </td>
+                        <td class="task-due">
+                            <%= task.due_time %>
                         </td>
                         <td>
-                            <%= stud.age %>
+                            <span class="status-badge status-pending">Pending</span>
                         </td>
                         <td>
-                            <%= stud.email %>
+                            <a href="/edit-task/<%= task.id %>">Edit</a>
                         </td>
                         <td>
-                            <a href="/edit-student/<%= stud.id %>">Edit</a>
-                        </td>
-                        <td>
-                            <a href="/delete-student/<%= stud.id %>">Delete</a>
+                            <a href="/delete-task/<%= task.id %>">Delete</a>
                         </td>
                     </tr>
                     <% }) %>

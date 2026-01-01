@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Task</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            padding-bottom: 12px;
+            border-bottom: 3px solid #333;
+            text-align: center;
+            width: 100%;
+        }
+        
+        form {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #333;
+            margin: 0 auto;
+        }
+        
+        table tr {
+            transition: all 0.3s ease;
+        }
+        
+        table tr:hover {
+            background-color: #FFF9C4;
+        }
+        
+        table td {
+            padding: 15px 20px;
+            border: 1px solid #FFA500;
+        }
+        
+        table tr:first-child td {
+            border-top: none;
+        }
+        
+        table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        table tr td:first-child {
+            font-weight: bold;
+            color: #333;
+            background-color: #FFD700;
+            width: 140px;
+            border-right: 2px solid #FFA500;
+        }
+        
+        table tr:last-child td:first-child {
+            border-bottom: none;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #FFA500;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #FFF8E1;
+            transition: all 0.3s;
+            color: #333;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #FF8C00;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.3);
+        }
+        
+        input[readonly] {
+            background-color: #F5F5F5;
+            color: #666;
+            cursor: not-allowed;
+            border-color: #CCCCCC;
+            font-weight: bold;
+        }
+        
+        input[readonly]:focus {
+            border-color: #CCCCCC;
+            box-shadow: none;
+            background-color: #F5F5F5;
+        }
+        
+        button[type="submit"] {
+            background: linear-gradient(to right, #FFD700, #FFA500);
+            color: #333;
+            border: 2px solid #FF8C00;
+            padding: 14px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        button[type="submit"]:hover {
+            background: linear-gradient(to right, #FFA500, #FF8C00);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 165, 0, 0.4);
+        }
+        
+        button[type="submit"]:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.4);
+        }
+        
+        /* Back link styling */
+        .back-link {
+            margin-top: 25px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .back-link a {
+            display: inline-block;
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 25px;
+            background: linear-gradient(to right, #FFD700, #FFA500);
+            border-radius: 5px;
+            border: 2px solid #FF8C00;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .back-link a:hover {
+            background: linear-gradient(to right, #FFA500, #FF8C00);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+        }
+        
+        /* Status dropdown styling */
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #FFA500;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #FFF8E1;
+            transition: all 0.3s;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #FF8C00;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h2 {
+                font-size: 26px;
+                margin-bottom: 20px;
+            }
+            
+            table td {
+                padding: 12px 15px;
+                font-size: 15px;
+            }
+            
+            table tr td:first-child {
+                width: 120px;
+            }
+            
+            input[type="text"],
+            input[type="date"],
+            input[type="time"],
+            textarea,
+            select {
+                padding: 10px 12px;
+                font-size: 15px;
+            }
+            
+            textarea {
+                min-height: 80px;
+            }
+            
+            button[type="submit"] {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 30px;
+            }
+            
+            h2 {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+            
+            table {
+                border: 1px solid #FFA500;
+            }
+            
+            table td {
+                display: block;
+                width: 100%;
+                padding: 10px;
+                border: none;
+                border-bottom: 1px solid #FFE4B5;
+            }
+            
+            table tr {
+                display: block;
+                border-bottom: 2px solid #FFA500;
+            }
+            
+            table tr:last-child {
+                border-bottom: none;
+            }
+            
+            table tr td:first-child {
+                width: 100%;
+                background-color: #FFD700;
+                font-weight: bold;
+                color: #333;
+                border-bottom: 1px solid #FFA500;
+                padding: 12px 10px 8px 10px;
+            }
+            
+            table tr:last-child td:first-child {
+                display: none;
+            }
+            
+            table tr:last-child td:last-child {
+                border-bottom: none;
+                padding-top: 20px;
+            }
+            
+            input[type="text"],
+            input[type="date"],
+            input[type="time"],
+            textarea,
+            select {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            textarea {
+                min-height: 70px;
+            }
+            
+            button[type="submit"] {
+                padding: 14px 20px;
+                font-size: 16px;
+            }
+            
+            .back-link {
+                margin-top: 20px;
+            }
+            
+            .back-link a {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Animation for page load */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .container {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Task ID badge effect */
+        table tr:first-child td:last-child {
+            position: relative;
+        }
+        
+        table tr:first-child td:last-child:after {
+            content: "READ ONLY";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #FFA500;
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            opacity: 0.7;
+        }
+        
+        /* Center alignment fix */
+        center {
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+        
+        form table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Edit Task Details</h2>
+
+        <form action="/update-task/<%= task.id %>" method="post">
+            <table border="1" cellpadding="5">
+                <tr>
+                    <td>Task ID:</td>
+                    <td>
+                        <input type="text" name="id" value="<%= task.id %>" required readonly>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Task Title:</td>
+                    <td>
+                        <input type="text" name="title" value="<%= task.title %>" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Description:</td>
+                    <td>
+                        <textarea name="description" required><%= task.description %></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Due Date:</td>
+                    <td>
+                        <input type="date" name="due_date" value="<%= task.due_date %>" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Due Time:</td>
+                    <td>
+                        <input type="time" name="due_time" value="<%= task.due_time %>" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Status:</td>
+                    <td>
+                        <select name="status" required>
+                            <option value="pending" <%= task.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                            <option value="in-progress" <%= task.status === 'in-progress' ? 'selected' : '' %>>In Progress</option>
+                            <option value="completed" <%= task.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                            <option value="overdue" <%= task.status === 'overdue' ? 'selected' : '' %>>Overdue</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit">Update Task</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        
+        <!-- Back link added for better navigation -->
+        <div class="back-link">
+            <a href="/">← Back to Tasks List</a>
+        </div>
+    </div>
+</body>
+
+</html>
