@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student</title>
+</head>
+
+<body>
+    <center>
+        <h2>Edit Student Details</h2>
+
+        <form action="/update-student/<%= student.id %>" method="post">
+            <table border="1" cellpadding="5">
+                <tr>
+                    <td>ID:</td>
+                    <td>
+                        <input type="text" name="id" value="<%= student.id %>" readonly>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Name:</td>
+                    <td>
+                        <input type="text" name="name" value="<%= student.name %>">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Age:</td>
+                    <td>
+                        <input type="number" name="age" value="<%= student.age %>">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <input type="email" name="email" value="<%= student.email %>">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit">Update Student</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</body>
+
+</html>
