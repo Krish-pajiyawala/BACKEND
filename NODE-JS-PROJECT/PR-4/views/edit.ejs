@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit BookStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background: linear-gradient(135deg, #222222 0%, #333333 100%);
+            padding: 35px 30px;
+            font-size: 2.8rem;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: white;
+            box-shadow: 0 6px 25px rgba(34, 34, 34, 0.3);
+            margin-bottom: 40px;
+            position: relative;
+            border-bottom: 5px solid #d4af37;
+        }
+
+        header i {
+            color: #d4af37;
+            margin-right: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #d4af37, #222222);
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 850px;
+            margin: 20px auto 60px;
+            padding: 45px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 40px rgba(34, 34, 34, 0.15);
+            border: 1px solid rgba(34, 34, 34, 0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(34, 34, 34, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-spacing: 0 18px;
+        }
+
+        td {
+            font-weight: 500;
+            font-size: 1.08rem;
+            color: #444;
+            padding: 8px 0;
+            vertical-align: middle;
+        }
+
+        td:first-child {
+            color: #222222;
+            font-weight: 600;
+            width: 220px;
+            padding-left: 15px;
+            padding-right: 20px;
+        }
+
+        td i {
+            color: #d4af37;
+            margin-right: 12px;
+            width: 22px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1rem;
+            border-radius: 12px;
+            border: 2px solid rgba(34, 34, 34, 0.1);
+            background: #ffffff;
+            transition: all 0.3s ease;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(34, 34, 34, 0.05);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #d4af37;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        textarea {
+            height: 130px;
+            resize: vertical;
+            line-height: 1.6;
+            font-family: inherit;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23222222' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            background-size: 20px;
+            padding-right: 50px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 25px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px 25px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 200px;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .update-btn {
+            background: linear-gradient(135deg, #222222 0%, #444444 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(34, 34, 34, 0.3);
+        }
+
+        .update-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(34, 34, 34, 0.4);
+            background: linear-gradient(135deg, #333333 0%, #555555 100%);
+        }
+
+        .update-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .update-btn:hover i {
+            transform: rotate(360deg);
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #555555 0%, #777777 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(85, 85, 85, 0.2);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #666666 0%, #888888 100%);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(85, 85, 85, 0.3);
+        }
+
+        .back-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-5px);
+        }
+
+        footer {
+            width: 100%;
+            margin-top: auto;
+            background: #222222;
+            padding: 25px;
+            color: #ffffff;
+            text-align: center;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            border-top: 4px solid #d4af37;
+        }
+
+        footer i {
+            color: #d4af37;
+            margin-right: 8px;
+        }
+
+        /* Form header styling */
+        .form-header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .form-header h2 {
+            font-size: 1.8rem;
+            color: #222222;
+            font-weight: 600;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .form-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #d4af37, #222222);
+            border-radius: 2px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .form-container {
+                width: 95%;
+                padding: 35px;
+            }
+            
+            td:first-child {
+                width: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 2.2rem;
+                padding: 25px 20px;
+            }
+            
+            .form-container {
+                padding: 25px;
+            }
+            
+            .btn-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                min-width: auto;
+                padding: 16px;
+            }
+            
+            td:first-child {
+                width: 150px;
+                padding-left: 10px;
+            }
+            
+            input, select, textarea {
+                padding: 14px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 1.8rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            td:first-child {
+                width: auto;
+                display: block;
+                padding: 10px 0 5px 0;
+            }
+            
+            td:last-child {
+                display: block;
+                padding: 0 0 15px 0;
+            }
+            
+            table {
+                border-spacing: 0 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header><i class="fas fa-edit"></i> Edit Book Details</header>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Edit Book Information</h2>
+        </div>
+
+        <form action="/edit/<%= book.id %>" method="post">
+
+            <table>
+                <tr>
+                    <td><i class="fas fa-book"></i> Book Title</td>
+                    <td>
+                        <input type="text" name="title" value="<%= book.title %>" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><i class="fas fa-user"></i> Author Name</td>
+                    <td>
+                        <input type="text" name="author" value="<%= book.author %>" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><i class="fas fa-tags"></i> Category</td>
+                    <td>
+                        <select name="genre" required>
+                            <option value="Fiction" <%= book.genre==='Fiction' ? 'selected' : '' %>>Fiction</option>
+                            <option value="Non-Fiction" <%= book.genre==='Non-Fiction' ? 'selected' : '' %>>Non-Fiction</option>
+                            <option value="Science" <%= book.genre==='Science' ? 'selected' : '' %>>Science</option>
+                            <option value="Technology" <%= book.genre==='Technology' ? 'selected' : '' %>>Technology</option>
+                            <option value="Biography" <%= book.genre==='Biography' ? 'selected' : '' %>>Biography</option>
+                            <option value="History" <%= book.genre==='History' ? 'selected' : '' %>>History</option>
+                            <option value="Romance" <%= book.genre==='Romance' ? 'selected' : '' %>>Romance</option>
+                            <option value="Mystery" <%= book.genre==='Mystery' ? 'selected' : '' %>>Mystery</option>
+                            <option value="Fantasy" <%= book.genre==='Fantasy' ? 'selected' : '' %>>Fantasy</option>
+                            <option value="Self-Help" <%= book.genre==='Self-Help' ? 'selected' : '' %>>Self-Help</option>
+                            <option value="Business" <%= book.genre==='Business' ? 'selected' : '' %>>Business</option>
+                            <option value="Academic" <%= book.genre==='Academic' ? 'selected' : '' %>>Academic</option>
+                            <option value="Children" <%= book.genre==='Children' ? 'selected' : '' %>>Children</option>
+                            <option value="Other" <%= book.genre==='Other' ? 'selected' : '' %>>Other</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><i class="fas fa-money-bill"></i> MRP (₹)</td>
+                    <td>
+                        <input type="number" name="price" value="<%= book.price %>" required min="0" step="0.01">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><i class="fas fa-align-left"></i> Description</td>
+                    <td>
+                        <textarea name="description" required><%= book.description %></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><i class="fas fa-building"></i> Publisher</td>
+                    <td>
+                        <input type="text" name="publisher" value="<%= book.publisher %>" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><i class="fas fa-calendar"></i> Published Year</td>
+                    <td>
+                        <input type="number" name="year" value="<%= book.year %>" required min="1000" max="2025">
+                    </td>
+                </tr>
+            </table>
+
+            <div class="btn-row">
+                <a href="/" class="btn back-btn"><i class="fas fa-arrow-left"></i> Back to List</a>
+                <button type="submit" class="btn update-btn"><i class="fas fa-save"></i> Update Book</button>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+</html>
