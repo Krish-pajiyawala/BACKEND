@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Movie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary-color: #008080;
+            --secondary-color: #808080;
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .edit-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .edit-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .edit-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .edit-header h1 i {
+            font-size: 1.5rem;
+        }
+
+        .edit-body {
+            padding: 30px;
+            background-color: var(--light-bg);
+        }
+
+        .edit-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-label .required {
+            color: #dc3545;
+            margin-left: 3px;
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.2);
+        }
+
+        .form-control[type="file"] {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .form-text {
+            color: var(--secondary-color);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .current-preview {
+            margin-top: 15px;
+            text-align: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 6px;
+            border: 1px dashed #ddd;
+        }
+
+        .current-preview img {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .current-preview p {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .button-group {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            min-width: 140px;
+        }
+
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #006666;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 128, 128, 0.2);
+        }
+
+        .btn-outline-custom {
+            background-color: transparent;
+            color: var(--secondary-color);
+            border: 1px solid var(--secondary-color);
+        }
+
+        .btn-outline-custom:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #006666;
+        }
+
+        @media (max-width: 768px) {
+            .edit-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: 1;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .back-link {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+            
+            body {
+                padding: 10px;
+                display: block;
+            }
+            
+            .edit-container {
+                margin-top: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .edit-header {
+                padding: 20px;
+            }
+            
+            .edit-header h1 {
+                font-size: 1.5rem;
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .edit-body {
+                padding: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<a href="/" class="back-link">
+    <i class="fas fa-arrow-left"></i> Back to Movie Collection
+</a>
+
+<div class="edit-container">
+    <!-- Header -->
+    <div class="edit-header">
+        <h1>
+            <i class="fas fa-edit"></i>Edit Movie
+        </h1>
+    </div>
+
+    <!-- Body -->
+    <div class="edit-body">
+        <form action="/update/<%= movie._id %>" method="POST" enctype="multipart/form-data" class="edit-form">
+            
+            <!-- Movie Title -->
+            <div class="form-group">
+                <label class="form-label">Movie Title <span class="required">*</span></label>
+                <input type="text" class="form-control" name="title" value="<%= movie.title %>" required>
+            </div>
+
+            <!-- Genre -->
+            <div class="form-group">
+                <label class="form-label">Genre</label>
+                <input type="text" class="form-control" name="genre" value="<%= movie.genre %>" placeholder="e.g., Action, Drama, Comedy">
+            </div>
+
+            <!-- Rating -->
+            <div class="form-group">
+                <label class="form-label">Rating (0-10)</label>
+                <input type="number" class="form-control" name="rating" min="0" max="10" step="0.1" 
+                       value="<%= movie.rating %>" placeholder="8.5">
+            </div>
+
+            <!-- Release Year -->
+            <div class="form-group">
+                <label class="form-label">Release Year</label>
+                <input type="number" class="form-control" name="releaseYear" 
+                       value="<%= movie.releaseYear %>" placeholder="2023">
+            </div>
+
+            <!-- Poster Image -->
+            <div class="form-group full-width">
+                <label class="form-label">Poster Image</label>
+                <input type="file" class="form-control" name="poster" accept="image/*">
+                <div class="form-text">Upload a new poster image (optional)</div>
+                
+                <!-- Current Poster Preview -->
+                <div class="current-preview">
+                    <% if (movie.poster) { %>
+                        <img src="<%= movie.poster %>" alt="Current Poster">
+                        <p>Current poster will be replaced</p>
+                    <% } else { %>
+                        <p><i class="fas fa-image"></i> No poster currently set</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <a href="/" class="btn btn-outline-custom">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+                <button type="submit" class="btn btn-custom">
+                    <i class="fas fa-save"></i> Update Movie
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
