@@ -10,6 +10,7 @@
 
                 <div class="mx-auto">
                     <form method="get" action="/blog/view-blog" class="form-inline">
+                        <input type="text" name="search" class="form-control mr-2" placeholder="Search by author" value="<%= search %>">
                         <select name="category" class="form-control mr-2">
                             <option value="" <%= !category ? 'selected' : '' %>>All Categories</option>
                             <% categories.forEach(cat => { %>

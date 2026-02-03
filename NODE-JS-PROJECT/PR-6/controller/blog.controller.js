@@ -68,11 +68,8 @@ exports.viewblogpage = async (req, res) => {
         if (search) {
             const safe = escapeRegex(search);
             const regex = new RegExp(safe, 'i');
-            filter.$or = [
-                { name: { $regex: regex } },
-                { title: { $regex: regex } },
-                { content: { $regex: regex } }
-            ];
+            // Search by author name only
+            filter.name = { $regex: regex };
         }
 
         if (category) {
