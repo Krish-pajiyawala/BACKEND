@@ -1,0 +1,233 @@
+<%- include("./header") %>
+
+    <div class="container my-5">
+
+        <h2 class="text-center fw-bold mb-5 position-relative">
+            Your Products
+            <span class="position-absolute bottom-0 start-50 translate-middle-x bg-primary" 
+                  style="width: 80px; height: 3px; bottom: -15px !important;"></span>
+        </h2>
+
+        <div class="row g-4">
+
+            <% products.forEach(product=> { %>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="card product-card h-100 border-0 shadow-sm hover-scale">
+                        
+                        <div class="position-relative overflow-hidden">
+                            <img src="<%= product.productImage %>" 
+                                 class="card-img-top product-img p-3 bg-light" 
+                                 style="height: 250px; object-fit: contain; transition: transform 0.5s ease;">
+                            
+                            <% if(product.productQuantity < 10) { %>
+                                <span class="position-absolute top-0 end-0 bg-danger text-white px-3 py-2 small fw-bold m-3 rounded-pill shadow">
+                                    Low Stock
+                                </span>
+                            <% } %>
+                        </div>
+
+                        <div class="card-body text-center d-flex flex-column">
+
+                            <h5 class="fw-bold mb-1 text-dark">
+                                <%= product.productName %>
+                            </h5>
+
+                            <p class="text-primary small mb-2 fw-semibold">
+                                <i class="bi bi-building"></i> <%= product.brandName %>
+                            </p>
+
+                            <p class="small text-secondary-emphasis bg-light p-3 rounded-3">
+                                <%= product.productDescription.substring(0,80) %>...
+                            </p>
+
+                            <div class="price-wrapper bg-primary bg-opacity-10 py-2 px-4 rounded-pill mx-auto mb-2">
+                                <span class="fw-bold text-primary fs-5">₹</span>
+                                <span class="fw-bold text-primary fs-4"><%= product.productPrice %></span>
+                            </div>
+
+                            <div class="stock-info d-flex align-items-center justify-content-center gap-2 mb-3">
+                                <div class="stock-bar" style="width: 100px; height: 6px; background-color: #e9ecef; border-radius: 10px;">
+                                    <div style="width: <%= Math.min(100, (product.productQuantity/50)*100) %>%; 
+                                                height: 100%; 
+                                                background-color: <%= product.productQuantity > 20 ? '#198754' : (product.productQuantity > 10 ? '#ffc107' : '#dc3545') %>; 
+                                                border-radius: 10px;">
+                                    </div>
+                                </div>
+                                <span class="text-muted small fw-semibold">
+                                    <i class="bi bi-box"></i> Stock: <%= product.productQuantity %>
+                                </span>
+                            </div>
+
+                            <div class="d-flex justify-content-center gap-3 mt-auto">
+
+                                <a href="/web/single-view/<%= product._id %>" 
+                                   class="btn btn-outline-primary px-4 py-2 rounded-pill fw-semibold"
+                                   style="border-width: 2px; transition: all 0.3s ease;">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+
+                                <form action="/web/add-to-cart/<%= product._id %>" method="POST" style="display: inline-block;">
+                                    <button class="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm"
+                                            style="transition: all 0.3s ease; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"
+                                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 20px rgba(102, 126, 234, 0.3)';"
+                                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.1)';">
+                                        <i class="bi bi-cart-plus"></i> Add to Cart
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <% }) %>
+
+        </div>
+    </div>
+
+    <style>
+        /* Custom CSS without JavaScript */
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+        }
+        
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+        
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
+        }
+        
+        /* Gradient text for headings */
+        h2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Animated underline */
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+            animation: underlinePulse 2s infinite;
+        }
+        
+        @keyframes underlinePulse {
+            0% { width: 80px; opacity: 1; }
+            50% { width: 120px; opacity: 0.7; }
+            100% { width: 80px; opacity: 1; }
+        }
+        
+        /* Card border gradient on hover */
+        .product-card {
+            position: relative;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #667eea, #764ba2) border-box;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            border-image: linear-gradient(135deg, #667eea, #764ba2) 1;
+        }
+        
+        /* Price tag styling */
+        .price-wrapper {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        /* Stock indicator animation */
+        .stock-bar div {
+            transition: width 0.3s ease;
+            animation: stockPulse 2s infinite;
+        }
+        
+        @keyframes stockPulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .product-img {
+                height: 200px !important;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Bootstrap Icons CDN */
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+        
+        /* Background pattern */
+        body {
+            background-image: radial-gradient(circle at 10% 20%, rgba(102, 126, 234, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(118, 75, 162, 0.05) 0%, transparent 20%);
+        }
+        
+        /* Card inner elements spacing */
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        
+        /* Loading animation for images */
+        .product-img {
+            animation: imageLoad 0.5s ease;
+        }
+        
+        @keyframes imageLoad {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+
+    </body>
+
+    </html>

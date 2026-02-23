@@ -1,0 +1,45 @@
+<%- include('../header') %>
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4" style="border-radius:20px;">
+
+        <img src="<%= product.productImage %>" 
+             class="img-fluid mb-4"
+             style="max-height:350px; object-fit:contain; border-radius: 10px;">
+
+        <h2 class="text-center mb-3">
+            <%= product.productName %>
+        </h2>
+
+        <p>
+            <b>Price:</b> ₹ <%= product.productPrice %>
+        </p>
+
+        <p>
+            <b>Quantity:</b> <%= product.productQuantity %>
+        </p>
+
+        <p>
+            <b>Brand:</b> <%= product.brandName %>
+        </p>
+
+        <p>
+            <b>Added Date:</b>
+            <%= product.createdAt ? product.createdAt.toISOString().split('T')[0] : 'N/A' %>
+        </p>
+
+        <hr>
+
+        <h5>Description</h5>
+        <p>
+            <%= product.productDescription %>
+        </p>
+
+        <div class="text-center mt-4">
+            <a href="/product/view-product" class="btn btn-secondary">Back</a>
+        </div>
+
+    </div>
+</div>
+
+<%- include('../footer') %>

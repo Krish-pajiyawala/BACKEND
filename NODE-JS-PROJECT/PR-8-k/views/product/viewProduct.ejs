@@ -1,0 +1,109 @@
+<%- include('../header') %>
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Tables</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Library</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+
+                <% products.forEach((product, i)=> { %>
+                    <div class="col-md-4 mb-4">
+
+                        <div class="card shadow" style="border-radius: 20px;">
+
+                            <img src="<%= product.productImage %>" class="card-img-top"
+                                style="height:200px; object-fit:contain; background:#f5f5f5; border-radius:20px 20px 0 0;"
+                                alt="Product Image">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title text-center">
+                                    <%= product.productName %>
+                                </h5>
+
+                                <p class="card-text mb-1">
+                                    <b>Price:</b> ₹ <%= product.productPrice %>
+                                </p>
+
+                                <p class="card-text mb-1">
+                                    <b>Quantity:</b>
+                                    <%= product.productQuantity %>
+                                </p>
+
+                                <p class="card-text mb-1">
+                                    <b>Brand:</b>
+                                    <%= product.brandName %>
+                                </p>
+
+                                <p class="card-text mb-2">
+                                    <b>Description:</b>
+                                    <%= product.productDescription %>
+                                </p>
+
+                                <div class="d-flex justify-content-between mt-3">
+                                    <a href="/product/single-view/<%= product.id %>" class="btn btn-sm btn-info">
+                                        View
+                                    </a>
+
+                                    <a href="/product/edit-product/<%= product.id %>" class="btn btn-sm btn-primary">
+                                        Edit
+                                    </a>
+
+                                    <a href="/product/delete-product/<%= product.id %>" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Are you sure?')">
+                                        Delete
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+
+
+        <%- include('../footer') %>
