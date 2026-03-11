@@ -1,0 +1,275 @@
+[
+  {
+    "api_name": "Admin Registration",
+    "method": "POST",
+    "endpoint": "/admin/register-admin",
+    "request_body": {
+      "firstname": "Admin",
+      "lastname": "Test",
+      "email": "admin_test_830679@gmail.com",
+      "password": "password123",
+      "role": "admin",
+      "gender": "male",
+      "mobileNo": "1234567890"
+    },
+    "response_status": 200,
+    "response_body": {
+      "message": "Admin Registed",
+      "user": {
+        "firstname": "Admin",
+        "lastname": "Test",
+        "email": "admin_test_830679@gmail.com",
+        "password": "$2b$12$R/02WjdIphJmYYTaCZfZdOImcHbnfchuKEVEwoDsV.m11IJ6NueyG",
+        "mobileNo": "1234567890",
+        "profileImage": "",
+        "gender": "male",
+        "role": "admin",
+        "isDelete": false,
+        "_id": "69aa6a82f429af01ea80ba0b",
+        "createdAt": "2026-03-06T05:47:46.905Z",
+        "updatedAt": "2026-03-06T05:47:46.905Z"
+      }
+    }
+  },
+  {
+    "api_name": "Admin Login",
+    "method": "POST",
+    "endpoint": "/admin/login-admin",
+    "request_body": {
+      "email": "admin_test_830679@gmail.com",
+      "password": "password123"
+    },
+    "response_status": 200,
+    "response_body": {
+      "message": "Login Success",
+      "status": 200,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFhNmE4MmY0MjlhZjAxZWE4MGJhMGIiLCJpYXQiOjE3NzI3NzYwNjd9.8oHMpmcTJ5p-_fygd1l14FF6F0f4ycL9vkQXeQs_bvs"
+    }
+  },
+  {
+    "api_name": "Admin Profile",
+    "method": "GET",
+    "endpoint": "/admin/admin-profile",
+    "request_body": null,
+    "response_status": 200,
+    "response_body": {
+      "message": "Admin Profile",
+      "admin": {
+        "_id": "69aa6a82f429af01ea80ba0b",
+        "firstname": "Admin",
+        "lastname": "Test",
+        "email": "admin_test_830679@gmail.com",
+        "password": "$2b$12$R/02WjdIphJmYYTaCZfZdOImcHbnfchuKEVEwoDsV.m11IJ6NueyG",
+        "mobileNo": "1234567890",
+        "profileImage": "",
+        "gender": "male",
+        "role": "admin",
+        "isDelete": false,
+        "createdAt": "2026-03-06T05:47:46.905Z",
+        "updatedAt": "2026-03-06T05:47:46.905Z"
+      }
+    }
+  },
+  {
+    "api_name": "Add Manager",
+    "method": "POST",
+    "endpoint": "/admin/add-manager",
+    "request_body": {
+      "firstname": "Manager",
+      "lastname": "Test",
+      "email": "manager_test_818998@gmail.com",
+      "password": "password123",
+      "role": "manager",
+      "gender": "male",
+      "mobileNo": "9876543210"
+    },
+    "response_status": 200,
+    "response_body": {
+      "message": "Manager created",
+      "manager": {
+        "firstname": "Manager",
+        "lastname": "Test",
+        "email": "manager_test_818998@gmail.com",
+        "password": "$2b$12$.Yn0KBFE1xNB2C8onUD4nOHturYU6x4kL5laZSbxn5nzjFsQ/dv8u",
+        "mobileNo": "9876543210",
+        "gender": "male",
+        "role": "manager",
+        "isDelete": false,
+        "_id": "69aa6a83f429af01ea80ba12",
+        "createdAt": "2026-03-06T05:47:47.481Z",
+        "updatedAt": "2026-03-06T05:47:47.481Z"
+      }
+    }
+  },
+  {
+    "api_name": "Get All Managers",
+    "method": "GET",
+    "endpoint": "/admin/all-managers",
+    "request_body": null,
+    "response_status": 200,
+    "response_body": {
+      "message": "All Managers",
+      "managers": [
+        {
+          "_id": "69aa6a83f429af01ea80ba12",
+          "firstname": "Manager",
+          "lastname": "Test",
+          "email": "manager_test_818998@gmail.com",
+          "password": "$2b$12$.Yn0KBFE1xNB2C8onUD4nOHturYU6x4kL5laZSbxn5nzjFsQ/dv8u",
+          "mobileNo": "9876543210",
+          "gender": "male",
+          "role": "manager",
+          "isDelete": false,
+          "createdAt": "2026-03-06T05:47:47.481Z",
+          "updatedAt": "2026-03-06T05:47:47.481Z"
+        }
+      ]
+    }
+  },
+  {
+    "api_name": "Manager Login",
+    "method": "POST",
+    "endpoint": "/manager/login-manager",
+    "request_body": {
+      "email": "manager_test_818998@gmail.com",
+      "password": "password123"
+    },
+    "response_status": 200,
+    "response_body": {
+      "message": "Login Success",
+      "status": 200,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFhNmE4M2Y0MjlhZjAxZWE4MGJhMTIiLCJpYXQiOjE3NzI3NzYwNjd9.cIYB7lm5noU00gfCrAgeeyHNG9rKsCXLdQqQsG-OkjM"
+    }
+  },
+  {
+    "api_name": "Manager Profile",
+    "method": "GET",
+    "endpoint": "/manager/manager-profile",
+    "request_body": null,
+    "response_status": 200,
+    "response_body": {
+      "message": "Manager Profile",
+      "manager": {
+        "_id": "69aa6a83f429af01ea80ba12",
+        "firstname": "Manager",
+        "lastname": "Test",
+        "email": "manager_test_818998@gmail.com",
+        "password": "$2b$12$.Yn0KBFE1xNB2C8onUD4nOHturYU6x4kL5laZSbxn5nzjFsQ/dv8u",
+        "mobileNo": "9876543210",
+        "gender": "male",
+        "role": "manager",
+        "isDelete": false,
+        "createdAt": "2026-03-06T05:47:47.481Z",
+        "updatedAt": "2026-03-06T05:47:47.481Z"
+      }
+    }
+  },
+  {
+    "api_name": "Create Employee",
+    "method": "POST",
+    "endpoint": "/manager/create-employee",
+    "request_body": {
+      "firstname": "Employee",
+      "lastname": "Test",
+      "email": "employee_test_268765@gmail.com",
+      "password": "password123",
+      "role": "employee",
+      "gender": "female",
+      "mobileNo": "1122334455"
+    },
+    "response_status": 200,
+    "response_body": {
+      "message": "Employee created",
+      "employee": {
+        "firstname": "Employee",
+        "lastname": "Test",
+        "email": "employee_test_268765@gmail.com",
+        "password": "$2b$12$2lf6pmjXh6x3GrGA5YM3F.y0KqONM426xcyK610SGTrHaGbUblenm",
+        "mobileNo": "1122334455",
+        "gender": "female",
+        "role": "employee",
+        "isDelete": false,
+        "_id": "69aa6a84f429af01ea80ba1b",
+        "createdAt": "2026-03-06T05:47:48.095Z",
+        "updatedAt": "2026-03-06T05:47:48.095Z"
+      }
+    }
+  },
+  {
+    "api_name": "Get All Employees",
+    "method": "GET",
+    "endpoint": "/manager/all-employees",
+    "request_body": null,
+    "response_status": 200,
+    "response_body": {
+      "message": "All Employees",
+      "employees": [
+        {
+          "_id": "69aa6a84f429af01ea80ba1b",
+          "firstname": "Employee",
+          "lastname": "Test",
+          "email": "employee_test_268765@gmail.com",
+          "password": "$2b$12$2lf6pmjXh6x3GrGA5YM3F.y0KqONM426xcyK610SGTrHaGbUblenm",
+          "mobileNo": "1122334455",
+          "gender": "female",
+          "role": "employee",
+          "isDelete": false,
+          "createdAt": "2026-03-06T05:47:48.095Z",
+          "updatedAt": "2026-03-06T05:47:48.095Z"
+        }
+      ]
+    }
+  },
+  {
+    "api_name": "Employee Login",
+    "method": "POST",
+    "endpoint": "/employee/login-employee",
+    "request_body": {
+      "email": "employee_test_268765@gmail.com",
+      "password": "password123"
+    },
+    "response_status": 200,
+    "response_body": {
+      "message": "Login Success",
+      "status": 200,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFhNmE4NGY0MjlhZjAxZWE4MGJhMWIiLCJpYXQiOjE3NzI3NzYwNjh9.aw-QzZjNC1dwefqjOq0CZ9dzhw9Xpvfq8HqRZDFF65s"
+    }
+  },
+  {
+    "api_name": "Employee Profile",
+    "method": "GET",
+    "endpoint": "/employee/employee-profile",
+    "request_body": null,
+    "response_status": 200,
+    "response_body": {
+      "message": "Employee Profile",
+      "employee": {
+        "_id": "69aa6a84f429af01ea80ba1b",
+        "firstname": "Employee",
+        "lastname": "Test",
+        "email": "employee_test_268765@gmail.com",
+        "password": "$2b$12$2lf6pmjXh6x3GrGA5YM3F.y0KqONM426xcyK610SGTrHaGbUblenm",
+        "mobileNo": "1122334455",
+        "gender": "female",
+        "role": "employee",
+        "isDelete": false,
+        "createdAt": "2026-03-06T05:47:48.095Z",
+        "updatedAt": "2026-03-06T05:47:48.095Z"
+      }
+    }
+  },
+  {
+    "api_name": "Change Employee Password",
+    "method": "POST",
+    "endpoint": "/employee/change-password",
+    "request_body": {
+      "oldPassword": "password123",
+      "newPassword": "newpassword123",
+      "confirmPassword": "newpassword123"
+    },
+    "response_status": 200,
+    "response_body": {
+      "message": "Password changed successfully"
+    }
+  }
+]

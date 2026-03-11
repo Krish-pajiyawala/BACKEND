@@ -1,0 +1,18 @@
+const express = require('express');
+const { registeradmin, loginadmin, adminprofile, updateadmin, changePassword, deleteadmin, addManager, getAllManagers, deleteManager, changeManagerPassword } = require('../controller/admin.controller');
+const upload = require('../middleware/uploadImage');
+const { verifyTokenAdmin } = require('../middleware/verifyToken')
+const routes = express.Router();
+
+routes.post("/register-admin", upload.single('profileImage'), registeradmin);
+routes.post("/login-admin", upload.none(), loginadmin);
+routes.get("/admin-profile", verifyTokenAdmin, adminprofile);
+routes.post("/update-admin", verifyTokenAdmin, upload.single('profileImage'), updateadmin);
+routes.post("/change-password", verifyTokenAdmin, changePassword);
+routes.delete("/delete-admin", verifyTokenAdmin, deleteadmin);
+routes.post("/add-manager", verifyTokenAdmin, upload.single('profileImage'), addManager);
+routes.get("/all-managers", verifyTokenAdmin, getAllManagers);
+routes.delete("/manager/:managerId", verifyTokenAdmin, deleteManager);
+routes.post("/manager/:managerId/change-password", verifyTokenAdmin, changeManagerPassword);
+
+module.exports = routes;
